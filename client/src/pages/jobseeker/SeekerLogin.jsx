@@ -1,5 +1,14 @@
 import LoginForm from "../../components/LoginForm.jsx"
-import handleSeekerLogin from "../../authHandler/handleSeekerLogin.js"
+import { seekerLogin } from "../../API/auth.js"
+
+function handleSeekerLogin(event) {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const email = formData.get("email")
+    const password = formData.get("password")
+
+    seekerLogin({ email, password })
+}
 
 export default function SeekerLogin() {
     return (

@@ -1,5 +1,22 @@
 import RegisterForm from "../../components/RegisterForm"
-import handleSeekerRegister from "../../authHandler/handleSeekerRegister"
+import { seekerRegister } from "../../API/auth"
+
+async function handleSeekerRegister(event) {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+
+    const seekerName = formData.get("seekerName")
+    const email = formData.get("email")
+    const password = formData.get("password")
+    const confirmedPassword = formData.get("confirmedPassword")
+
+    if (password !== confirmedPassword) {
+        alert("Please ensure password and confirmed password are same")
+        return
+    }
+
+    await seekerRegister({ seekerName, email, password })
+}
 
 export default function SeekerRegister(){
     return (

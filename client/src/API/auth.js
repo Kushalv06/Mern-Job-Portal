@@ -1,0 +1,46 @@
+export async function orgLogin(credentials) {
+    try {
+        const res = await fetch("http://localhost:8000/api/auth/organization/login", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: "include",
+            body: JSON.stringify(credentials)
+        })
+
+        const data = await res.json()
+
+        return data
+    }
+    catch (err) {
+        console.log(err)
+        throw err
+    }
+}
+
+export async function orgRegister(credentials) {
+    try {
+        const res = await fetch('http://localhost:8000/api/auth/organization/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: "include",
+            body: JSON.stringify(credentials)
+        })
+
+        const data = await res.json()
+
+        return data
+    } catch (err) {
+        console.error('Server error:', err)
+        throw err
+    }
+}
+
+export async function seekerLogin(credentials) {
+    return credentials
+}
+
+export async function seekerRegister(credentials) {
+    return credentials
+}

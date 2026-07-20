@@ -96,7 +96,6 @@ export async function me(req,res){
     try{
         const _id = req.session.userId
         const organization = await Organization.findOne({_id},{orgName:1,_id:0})
-        console.log(organization)
         if(!organization){
             return res.status(401).json({message : "Unauthorized", success: false})
         }
