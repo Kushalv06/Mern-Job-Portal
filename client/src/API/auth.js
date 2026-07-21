@@ -37,6 +37,23 @@ export async function orgRegister(credentials) {
     }
 }
 
+export async function orgSignOut(){
+    try{
+        const res = await fetch('http://localhost:8000/api/auth/organization/signout',{
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            credentials: 'include'
+        })
+
+        const data = await res.json()
+        return data;
+    }
+    catch(err){
+        console.error(err)
+        throw err
+    }
+}
+
 export async function seekerLogin(credentials) {
     return credentials
 }

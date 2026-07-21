@@ -53,6 +53,8 @@ export async function orgRegister(req, res) {
 }
 
 
+
+
 export async function orgLogin(req, res) {
     let { email, password } = req.body
 
@@ -87,6 +89,26 @@ export async function orgLogin(req, res) {
     }
 
 }
+
+
+
+export function orgSignOut(req,res){
+    if(!req.session.userId || req.session.role !== 'organization'){
+        return res.status(401).json({message:"Unauthorized to SignOut", success: false})
+    }
+
+    req.session.destroy((err)=>{
+        if(err){
+            return res.status(500).json({message:"Sign out failed",success: false})
+        }
+
+        res.clearCookie('connect.sid')
+        return res.status(200).json({message:'User signed out',success: true})
+    })
+
+}
+
+
 
 export async function me(req,res){
     if(!req.session.userId || req.session.role !== 'organization'){
