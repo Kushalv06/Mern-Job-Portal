@@ -1,5 +1,5 @@
 import express from 'express'
-import { orgLogin,orgRegister,orgSignOut,me } from '../authcontrollers/orgAuth.js'
+import { orgLogin,orgRegister,orgSignOut,me } from '../controllers/authcontrollers/orgAuth.js'
 
 export const authRouter = express.Router()
 

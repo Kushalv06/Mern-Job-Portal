@@ -12,7 +12,8 @@ try{
     await connectDb()
     const app = express()
     app.use(cors({
-        origin: "http://localhost:5173",
+        origin: ["http://localhost:5173",
+                "http://10.25.52.189:5173"],
         credentials: true
     }))
     app.use(express.json())

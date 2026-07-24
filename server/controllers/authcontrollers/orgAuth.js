@@ -1,4 +1,4 @@
-import Organization from "../models/Organization.js"
+import Organization from "../../models/Organization.js"
 import validator from "validator"
 import bcrypt from "bcryptjs"
 
@@ -33,7 +33,6 @@ export async function orgRegister(req, res) {
         }
 
         const organization = await Organization.create({ orgName, email, password })
-        console.log(organization)
         req.session.userId = organization._id
         req.session.role = 'organization'
         return res.status(201).json({

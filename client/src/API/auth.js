@@ -1,6 +1,6 @@
 export async function orgLogin(credentials) {
     try {
-        const res = await fetch("http://localhost:8000/api/auth/organization/login", {
+        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/auth/organization/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -21,7 +21,7 @@ export async function orgLogin(credentials) {
 
 export async function orgRegister(credentials) {
     try {
-        const res = await fetch('http://localhost:8000/api/auth/organization/register', {
+        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/auth/organization/register`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: "include",
@@ -39,7 +39,7 @@ export async function orgRegister(credentials) {
 
 export async function orgSignOut(){
     try{
-        const res = await fetch('http://localhost:8000/api/auth/organization/signout',{
+        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/auth/organization/signout`,{
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             credentials: 'include'

@@ -9,7 +9,7 @@ export default function OrgRegister(){
         const formData = new FormData(event.currentTarget)
 
         const orgName = formData.get("orgName")
-        const email = formData.get("email")
+        const email = formData.get("email").toLowerCase().trim()
         const password = formData.get("password")
         const confirmedPassword = formData.get("confirmedPassword")
 
