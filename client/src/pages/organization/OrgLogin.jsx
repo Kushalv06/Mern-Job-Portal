@@ -1,9 +1,26 @@
 import LoginForm from "../../components/LoginForm.jsx"
+import { getCurrentOrganization } from "../../API/organization.js"
 import { orgLogin } from "../../API/auth.js"
 import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 
 export default function OrgLogin() {
     const navigate = useNavigate()
+
+    async function checkAuth(){
+        try{
+            const data = await getCurrentOrganization()
+            if(data.success) navigate('/organization/dashboard')
+        }
+        catch(err){
+            // User is not authenticated.
+            // Stay on the login page.
+        }
+    }
+
+    useEffect(()=>{
+        checkAuth()
+    },[])
 
     async function handleForm(event){
         event.preventDefault()

@@ -4,6 +4,7 @@ import OrgLogin from './pages/organization/OrgLogin.jsx'
 import OrgRegister from './pages/organization/OrgRegister.jsx'
 import OrgDashboard from './pages/organization/OrgDashboard.jsx'
 import JobPost from './pages/organization/JobPost.jsx'
+import ManageJobs from './pages/organization/Jobs.jsx'
 import SeekerLogin from './pages/jobseeker/SeekerLogin.jsx'
 import SeekerRegister from './pages/jobseeker/SeekerRegister.jsx'
 import './index.css'
@@ -19,6 +20,7 @@ function App() {
         <Route path="/jobseeker/register" element={<SeekerRegister />} />
         <Route path="/organization/dashboard" element={<OrgDashboard />} />
         <Route path="/organization/job/post" element={<JobPost />} />
+        <Route path="/organization/jobs" element={<ManageJobs />} />
       </Routes>
     </>
   )

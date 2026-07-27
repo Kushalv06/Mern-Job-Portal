@@ -4,6 +4,7 @@ import session from 'express-session'
 import 'dotenv/config'
 import { apiRouter } from './routers/apiRouter.js'
 import connectDb from './config/db.js'
+import MongoStore from "connect-mongo"
 
 const PORT = 8000
 const secret = process.env.SESSION_SECRET
@@ -21,6 +22,9 @@ try{
         secret: secret,
         resave: false,
         saveUninitialized: false,
+        store: MongoStore.create({
+            mongoUrl: process.env.DB_URL_LINK
+        }),
         cookie:{
             httpOnly: true,
             secure: false,
