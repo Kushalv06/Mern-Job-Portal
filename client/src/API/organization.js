@@ -19,7 +19,7 @@ export async function getCurrentOrganization() {
 
 export async function postJob(jobDetails) {
     try {
-        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/organization/postjob`, {
+        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/organization/jobs`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -45,6 +45,22 @@ export async function getJobs() {
         return data
     }
     catch (err) {
+        alert('Server error')
+    }
+}
+
+export async function deleteJob(id){
+    try{
+        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/organization/jobs/${id}`,{
+            method: 'DELETE',
+            credentials: 'include'
+        })
+
+        const data = await res.json()
+        return data
+    }
+    catch(err){
+        console.error(err)
         alert('Server error')
     }
 }

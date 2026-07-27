@@ -1,12 +1,55 @@
-export default function JobModal({job,close}){
-    document.addEventListener('keydown',e=>{
-        if(e.key === 'Escape') close()
+import { useState,useEffect } from "react"
+import { formatDistanceToNow, set } from "date-fns"
+import { deleteJob } from "../API/organization.js"
+
+
+export default function JobModal({job,close,removeJob}){
+    const [deleting,setDeleting] = useState(false)
+
+    useEffect(()=>{
+        function handleKeyDown(event){
+            if(event.key === 'Escape') close()
+        }
+
+        document.addEventListener('keydown',handleKeyDown)
+
+        return ()=>{
+            document.removeEventListener('keydown',handleKeyDown)
+        }
+
+    },[close])
+
+    const postedAgo = formatDistanceToNow(new Date(job.createdAt),{
+        addSuffix: true,
+        includeSeconds: true
     })
 
-    const postedAgo = Date.now() - new Date(job.createdAt)
+    async function handler(id){
+        setDeleting(true)
+        try{
+            const data = await deleteJob(id)
+
+            if(data.success){
+                removeJob(id)
+                close()
+            }
+            else{
+                console.log(data.message)
+            }
+        }
+        catch(err){
+            console.error(err)
+        }
+        finally{
+            setDeleting(false)
+        }
+
+        
+    }
+
     return (
         <div onClick={close} className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 py-6">
-            <article onClick={e=>e.stopPropagation()} className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-xl">
+            <article onClick={e=>e.stopPropagation()} className="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-xl">
                 <div className="flex items-start justify-between gap-4 border-b border-slate-200 px-6 py-5">
                     <div className="min-w-0">
                         <h3 className="text-2xl font-semibold text-slate-900">{job.jobTitle}</h3>
@@ -32,6 +75,9 @@ export default function JobModal({job,close}){
                     <div className="mt-6">
                         <p className="text-sm font-medium text-slate-900">Description</p>
                         <p className="mt-2 whitespace-pre-line text-sm leading-7 text-slate-600">{job.jobDescription}</p>
+                    </div>
+                    <div className="w-full flex">
+                        <button onClick={()=>handler(job._id)} disabled={deleting} className="bg-red-500 ml-auto px-4 py-2 rounded-lg text-white font-medium mt-4 cursor-pointer hover:bg-red-600 active:scale-[0.97] transition duration-75 ">{deleting? 'Deleting...' : 'Delete Post'}</button>
                     </div>
                 </div>
             </article>

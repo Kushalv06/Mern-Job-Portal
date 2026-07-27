@@ -40,6 +40,10 @@ export default function Jobs() {
         setSelectedJob(null)
     }
 
+    function removeJob(id) {
+        setJobs(prev => prev.filter(job => job._id !== id))
+    }
+
     if (loading) {
         return (
             <main className="min-h-screen bg-slate-50 px-4 py-10">
@@ -81,7 +85,7 @@ export default function Jobs() {
                                 location={job.location}
                                 type={job.jobType}
                                 salary={job.salary}
-                                postedAgo={formatDistanceToNow(new Date(job.createdAt),{
+                                postedAgo={formatDistanceToNow(new Date(job.createdAt), {
                                     addSuffix: true,
                                     includeSeconds: true,
                                 })}
@@ -94,6 +98,7 @@ export default function Jobs() {
                 {selectedJob && <JobModal
                     job={selectedJob}
                     close={closeModal}
+                    removeJob={removeJob}
                 />}
             </div>
         </main>
