@@ -1,4 +1,4 @@
-export default function JobCard({ title, description, type, location, salary, postedAgo,onClick}) {
+export default function JobCard({ title, description, type, location, salary, postedAgo,onClick,toView}) {
     return (
         <article onClick={onClick} className="cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-lg">
             <div className="flex items-start justify-between gap-4">
@@ -17,7 +17,7 @@ export default function JobCard({ title, description, type, location, salary, po
                 <span>{location}</span>
                 <span className="text-slate-300">|</span>
                 <span className="mr-auto">Salary: {salary}</span>
-                <p className="text-xs">Click to View</p>
+                {<p className="text-xs">{toView? 'Click to View' : 'Go to manage jobs to view'}</p>}
             </div>
         </article>
     )

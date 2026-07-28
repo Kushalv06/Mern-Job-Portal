@@ -90,6 +90,7 @@ export default function Jobs() {
                                     includeSeconds: true,
                                 })}
                                 onClick={() => setSelectedJob(job)}
+                                toView={true}
                             />
                         ))}
                     </div>
