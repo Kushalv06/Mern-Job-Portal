@@ -1,15 +1,17 @@
-import { getCurrentOrganization,getJobs } from "../../API/organization"
-import { orgSignOut } from "../../API/auth"
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useOutletContext } from "react-router-dom"
 import { formatDistanceToNow } from "date-fns"
+import { getJobs } from '../../API/organization'
 import JobCard from "../../components/JobCard"
+import Loading from "../../components/Loading"
 
 export default function OrgDashboard() {
-    const [orgName, setOrgName] = useState("")
     const [loading, setLoading] = useState(true)
     const [recentJobs,setRecentJobs] = useState([])
     const navigate = useNavigate()
+
+    const context = useOutletContext();
+    const orgName = context.orgName
 
     const recentJobCards = recentJobs.map(job=><JobCard 
                                                 key={job._id}
@@ -27,12 +29,8 @@ export default function OrgDashboard() {
 
     async function loadDashboard(){
         try{
-            const [orgData,jobsData] = await Promise.all([
-                getCurrentOrganization(),
-                getJobs()
-            ])
-            setOrgName(orgData.orgName);
-            setRecentJobs(jobsData.jobs.slice(0, 3));
+            const jobsData = await getJobs()
+            setRecentJobs(jobsData.jobs.slice(0, 3))
         }
         catch(err){
             console.error(err)
@@ -47,44 +45,13 @@ export default function OrgDashboard() {
         loadDashboard()
     },[])
 
-    async function handleSignOut() {
-        try {
-            const data = await orgSignOut()
-            console.log(data)
-
-            if (data.success) {
-                console.log(data.message)
-                navigate('/')
-            }
-            else {
-                alert(data.message)
-                console.log("Error signing out")
-            }
-        }
-        catch (err) {
-            alert(err)
-        }
-    }
 
     if (loading) {
-        return (
-            <>
-                <div className="min-h-screen flex items-center justify-center bg-slate-50">
-                    <p className="text-slate-600 text-xl font-medium">Loading...</p>
-                </div>
-            </>
-        )
+        <Loading />
     }
 
     return (
         <>
-            <nav className="border-b border-slate-200 bg-white text-slate-800">
-                <div className="mx-auto flex h-14 max-w-5xl items-center px-4">
-                    <p className="mr-auto font-bold text-blue-600">Job-Portal</p>
-                    <p className="mr-4 font-medium">{orgName}</p>
-                    <button onClick={handleSignOut} className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 cursor-pointer">Sign Out</button>
-                </div>
-            </nav>
             <main className="min-h-screen bg-slate-50 px-4 py-6">
                 <div className="mx-auto max-w-5xl space-y-6">
                     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">

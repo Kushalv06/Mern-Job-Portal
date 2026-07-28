@@ -8,6 +8,7 @@ import ManageJobs from './pages/organization/Jobs.jsx'
 import SeekerLogin from './pages/jobseeker/SeekerLogin.jsx'
 import SeekerRegister from './pages/jobseeker/SeekerRegister.jsx'
 import './index.css'
+import OrganizationLayout from './layouts/OrganizationLayout.jsx'
 
 function App() {
   return (
@@ -16,11 +17,13 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/organization/login" element={<OrgLogin />} />
         <Route path="/organization/register" element={<OrgRegister />} />
+        <Route path="/organization" element={<OrganizationLayout />}>
+          <Route path="dashboard" element={<OrgDashboard />} />
+          <Route path="job/post" element={<JobPost />} />
+          <Route path="jobs" element={<ManageJobs />} />
+      </Route>
         <Route path="/jobseeker/login" element={<SeekerLogin />} />
         <Route path="/jobseeker/register" element={<SeekerRegister />} />
-        <Route path="/organization/dashboard" element={<OrgDashboard />} />
-        <Route path="/organization/job/post" element={<JobPost />} />
-        <Route path="/organization/jobs" element={<ManageJobs />} />
       </Routes>
     </>
   )
