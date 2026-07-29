@@ -19,8 +19,8 @@ export async function orgRegister(req, res) {
         return res.status(400).json({ message: "Please enter a valid Email", success: false })
     }
 
-    if (password.length < 8) {
-        return res.status(400).json({ message: "Password should be minimum length of 8 ", success: false })
+    if (password.length < 4) {
+        return res.status(400).json({ message: "Password should be minimum length of 4 ", success: false })
     }
 
     try {

@@ -17,7 +17,7 @@ export default function JobCard({ title, description, type, location, salary, po
                 <span>{location}</span>
                 <span className="text-slate-300">|</span>
                 <span className="mr-auto">Salary: {salary}</span>
-                {<p className="text-xs">{toView? 'Click to View' : 'Go to manage jobs to view'}</p>}
+                {<p className="text-xs font-medium text-slate-700">{toView? 'Click to View / Delete' : 'Go to manage jobs to view'}</p>}
             </div>
         </article>
     )

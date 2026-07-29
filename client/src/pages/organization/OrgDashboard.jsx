@@ -7,43 +7,43 @@ import Loading from "../../components/Loading"
 
 export default function OrgDashboard() {
     const [loading, setLoading] = useState(true)
-    const [recentJobs,setRecentJobs] = useState([])
+    const [recentJobs, setRecentJobs] = useState([])
     const navigate = useNavigate()
 
     const context = useOutletContext();
     const orgName = context.orgName
 
-    const recentJobCards = recentJobs.map(job=><JobCard 
-                                                key={job._id}
-                                                title={job.jobTitle}
-                                                description={job.jobDescription}
-                                                location={job.location}
-                                                type={job.jobType}
-                                                salary={job.salary}
-                                                postedAgo={formatDistanceToNow(new Date(job.createdAt), {
-                                                    addSuffix: true,
-                                                    includeSeconds: true,
-                                                })}
-                                                toView={false}
-                                                />)
+    const recentJobCards = recentJobs.map(job => <JobCard
+        key={job._id}
+        title={job.jobTitle}
+        description={job.jobDescription}
+        location={job.location}
+        type={job.jobType}
+        salary={job.salary}
+        postedAgo={formatDistanceToNow(new Date(job.createdAt), {
+            addSuffix: true,
+            includeSeconds: true,
+        })}
+        toView={false}
+    />)
 
-    async function loadDashboard(){
-        try{
+    async function loadDashboard() {
+        try {
             const jobsData = await getJobs()
             setRecentJobs(jobsData.jobs.slice(0, 3))
         }
-        catch(err){
+        catch (err) {
             console.error(err)
             navigate('/organization/login')
         }
-        finally{
+        finally {
             setLoading(false)
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         loadDashboard()
-    },[])
+    }, [])
 
 
     if (loading) {
@@ -64,7 +64,7 @@ export default function OrgDashboard() {
                     <section className="mt-6 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm">
                         <p className="text-lg font-semibold text-slate-900">Recent Job posts</p>
                         <div className="mt-4 space-y-2 text-slate-700">
-                            {recentJobCards.length === 0? <p>No recent job posts yet</p> : recentJobCards}
+                            {loading ? <Loading /> : recentJobCards.length === 0 ? <p>No recent job posts yet</p> : recentJobCards}
                         </div>
                     </section>
                 </div>

@@ -57,12 +57,12 @@ export default function Jobs() {
     return (
         <main className="min-h-screen bg-slate-50 px-4 py-10">
             <div className="mx-auto max-w-3xl">
-                <div className="mb-8 flex items-center justify-between">
+                <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div>
                         <h1 className="text-3xl font-bold text-slate-900">Manage Jobs</h1>
                         <p className="mt-2 text-slate-600">Review and manage all your posted jobs.</p>
                     </div>
-                    <Link to="/organization/job/post" className="rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 active:scale-[0.97] cursor-pointer">
+                    <Link to="/organization/job/post" className="self-start rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 active:scale-[0.97] cursor-pointer ">
                         Post a Job
                     </Link>
                 </div>
