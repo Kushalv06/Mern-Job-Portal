@@ -55,7 +55,22 @@ export async function orgSignOut(){
 }
 
 export async function seekerLogin(credentials) {
-    return credentials
+    try {
+        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/auth/jobseeker/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(credentials)
+        })
+
+        const data = await res.json()
+
+        return data
+    }
+    catch (err) {
+        console.error(err)
+        throw err
+    }
 }
 
 export async function seekerRegister(credentials) {

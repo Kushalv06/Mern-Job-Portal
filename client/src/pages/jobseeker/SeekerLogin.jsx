@@ -5,14 +5,22 @@ import { useNavigate } from "react-router-dom"
 export default function SeekerLogin() {
     const navigate = useNavigate()
 
-    function handleSeekerLogin(event) {
+    async function handleSeekerLogin(event) {
         event.preventDefault()
         const formData = new FormData(event.currentTarget)
-        const email = formData.get("email")
+        const email = formData.get("email").toLowerCase().trim()
         const password = formData.get("password")
 
         try{
-            seekerLogin({ email, password })
+            const data = await seekerLogin({ email, password })
+
+            if (data.success) {
+                console.log('User logged in')
+                navigate('/jobseeker/home')
+            }
+            else {
+                alert(data.message)
+            }
         }
         catch(err){
             console.error(err)
