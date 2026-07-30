@@ -77,7 +77,7 @@ export async function seekerRegister(credentials) {
     try{
         const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/auth/jobseeker/register`,{
             method: 'POST',
-            headers: {'Content-Type':'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
             body: JSON.stringify(credentials)
         })

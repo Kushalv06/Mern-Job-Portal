@@ -55,9 +55,10 @@ export async function seekerRegister(req,res){
     }
 }
 
+
 export async function seekerLogin(req,res){
     let { email, password } = req.body
-
+    
     if(!email || !password){
         return res.status(400).json({message:'Please fill all required details',success:false})
     }
@@ -74,7 +75,7 @@ export async function seekerLogin(req,res){
 
     try{
         const seeker = await Seeker.findOne({ email })
-
+        
         if(!seeker){
             return res.status(401).json({message:'Invalid credentials',success:false})
         }
@@ -85,7 +86,7 @@ export async function seekerLogin(req,res){
 
         req.session.userId = seeker._id
         req.session.role = 'seeker'
-
+        
         return res.status(200).json({
             message: `${seeker.seekerName} logged in`,
             success: true,
@@ -95,5 +96,24 @@ export async function seekerLogin(req,res){
     catch(err){
         console.error(err)
         return res.status(500).json({message:'Failed to login',success:false})
+    }
+}
+
+export async function me(req,res){
+    if(!req.session.userId || req.session.role !== 'seeker'){
+        return res.status(401).json({message: `Unauthorized`,success: false})
+    }
+    
+    try{
+        const _id = req.session.userId
+        const seeker = await Seeker.findById(_id,{seekerName:1,_id:0})
+        if(!seeker){
+            return res.status(401).json({message : "Unauthorized", success: false})
+        }
+        return res.status(200).json({message:"seekerName was retrived successfully from Database",success: true,seekerName:seeker.seekerName})
+    }
+    catch(err){
+        console.error(err)
+        res.status(500).json({message:"server error",success: false})
     }
 }

@@ -1,7 +1,7 @@
 import express from "express"
-import { postJob } from '../controllers/jobcontrollers/postJob.js'
-import { getJobs } from '../controllers/jobcontrollers/getJobs.js'
-import { deleteJob } from '../controllers/jobcontrollers/deleteJob.js'
+import { postJob } from '../controllers/orgjobcontrollers/postJob.js'
+import { getJobs } from '../controllers/orgjobcontrollers/getJobs.js'
+import { deleteJob } from '../controllers/orgjobcontrollers/deleteJob.js'
 
 export const orgRouter = express.Router()
 
