@@ -117,3 +117,18 @@ export async function me(req,res){
         res.status(500).json({message:"server error",success: false})
     }
 }
+
+export function seekerSignOut(req,res){
+    if(!req.session.userId || req.session.role !== 'seeker'){
+        return res.status(401).json({message:"Unauthorized to SignOut", success: false})
+    }
+
+    req.session.destroy((err)=>{
+        if(err){
+            return res.status(500).json({message:"Sign out failed",success: false})
+        }
+
+        res.clearCookie('connect.sid')
+        return res.status(200).json({message:'Seeker signed out',success: true})
+    })
+}

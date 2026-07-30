@@ -91,3 +91,21 @@ export async function seekerRegister(credentials) {
         throw err
     }
 }
+
+export async function seekerSignOut(){
+    try{
+        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/auth/jobseeker/signout`,{
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            credentials: 'include'
+        })
+
+        const data = await res.json()
+
+        return data
+    }
+    catch(err){
+        console.error(err)
+        throw err
+    }
+}
