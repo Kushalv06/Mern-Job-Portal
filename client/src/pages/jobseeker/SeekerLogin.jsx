@@ -1,9 +1,26 @@
 import LoginForm from "../../components/LoginForm.jsx"
 import { seekerLogin } from "../../API/auth.js"
+import { getCurrentSeeker } from "../../API/seeker.js"
 import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 
 export default function SeekerLogin() {
     const navigate = useNavigate()
+
+    async function checkAuth(){
+        try{
+            const data = await getCurrentSeeker()
+            if(data.success) navigate('/jobseeker/home')
+        }
+        catch(err){
+            // User is not authenticated.
+            // Stay on the login page.
+        }
+    }
+
+    useEffect(()=>{
+        checkAuth()
+    },[])
 
     async function handleSeekerLogin(event) {
         event.preventDefault()
