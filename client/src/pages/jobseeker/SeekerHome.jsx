@@ -3,15 +3,16 @@ import { useOutletContext, useNavigate } from "react-router-dom"
 import { formatDistanceToNow } from "date-fns"
 import JobCard from "../../components/JobCard.jsx"
 import JobModal from "../../components/JobModal.jsx"
-import { getJobs } from "../../API/seeker"
+import { getJobs, applyJob } from "../../API/seeker"
 
-export default function SeekerHome(){
+export default function SeekerHome() {
     const context = useOutletContext()
     const seekerName = context.seekerName
     const navigate = useNavigate()
     const [jobs, setJobs] = useState([])
     const [loading, setLoading] = useState(true)
     const [selectedJob, setSelectedJob] = useState(null)
+    const [appliedJobs, setAppliedJobs] = useState(new Set())
 
     async function fetchJobs() {
         try {
@@ -19,6 +20,8 @@ export default function SeekerHome(){
 
             if (data.success) {
                 setJobs(data.jobs)
+                const applied = new Set(data.appliedJobs.map(j => j.jobId))
+                setAppliedJobs(applied)
             }
             else {
                 if (data.message === 'Unauthorized') navigate('/jobseeker/login')
@@ -41,10 +44,11 @@ export default function SeekerHome(){
         setSelectedJob(null)
     }
 
-    async function apply(id) {
-        return { success: false, message: 'Apply feature not implemented yet' }
+    async function refreshPage() {
+        setSelectedJob(prev => ({...prev,applied:true}))
+        await fetchJobs()
     }
-    
+
     return (
         <main className="min-h-screen bg-slate-50 px-4 py-10">
             <div className="mx-auto max-w-5xl">
@@ -61,8 +65,9 @@ export default function SeekerHome(){
                         </div>
                     ) : (
                         <div className="flex flex-col gap-4">
-                            {jobs.map(job => (
-                                <JobCard
+                            {jobs.map(job => {
+                                job.applied = appliedJobs.has(job._id)
+                                return <JobCard
                                     key={job._id}
                                     title={job.jobTitle}
                                     description={job.jobDescription}
@@ -75,9 +80,9 @@ export default function SeekerHome(){
                                     })}
                                     company={job.postedBy?.orgName}
                                     onClick={() => setSelectedJob(job)}
-                                    footer={'Click to View / Apply'}
+                                    footer={job.applied ? 'Applied' : 'Click to View / Apply'}
                                 />
-                            ))}
+                            })}
                         </div>
                     )}
                 </div>
@@ -85,9 +90,11 @@ export default function SeekerHome(){
                 {selectedJob && <JobModal
                     job={selectedJob}
                     close={closeModal}
-                    action={'Apply'}
-                    onAction={apply}
-                    actionLoading={'applying...'}
+                    action={selectedJob.applied ? 'Applied' : 'Apply'}
+                    onAction={applyJob}
+                    actionLoading={'Applying...'}
+                    afterSuccess={refreshPage}
+                    autoClose={false}
                 />}
             </div>
         </main>

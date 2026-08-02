@@ -33,3 +33,19 @@ export async function getJobs() {
         throw err
     }
 }
+
+export async function applyJob(id) {
+    try {
+        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/jobseeker/apply/${id}`, {
+            method: 'POST',
+            credentials: 'include'
+        })
+
+        const data = await res.json()
+
+        return data
+    } catch (err) {
+        console.error('Server error:', err)
+        throw err
+    }
+}

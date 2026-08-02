@@ -101,10 +101,11 @@ export default function Jobs() {
                 {selectedJob && <JobModal
                     job={selectedJob}
                     close={closeModal}
-                    filterFrontend={removeJob}
+                    refreshPage={removeJob}
                     action={'Delete'}
                     onAction={deleteJob}
-                    actionLoading={'deleting...'}
+                    actionLoading={'Deleting...'}
+                    autoClose={true}
                 />}
             </div>
         </main>
