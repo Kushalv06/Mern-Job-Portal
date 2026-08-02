@@ -1,10 +1,9 @@
 import { useState,useEffect } from "react"
-import { formatDistanceToNow, set } from "date-fns"
-import { deleteJob } from "../API/organization.js"
+import { formatDistanceToNow } from "date-fns"
 
 
-export default function JobModal({job,close,removeJob}){
-    const [deleting,setDeleting] = useState(false)
+export default function JobModal({job,close,filterFrontend,action,onAction,actionLoading}){
+    const [actionStarted,setActionStarted] = useState(false)
 
     useEffect(()=>{
         function handleKeyDown(event){
@@ -25,12 +24,12 @@ export default function JobModal({job,close,removeJob}){
     })
 
     async function handler(id){
-        setDeleting(true)
+        setActionStarted(true)
         try{
-            const data = await deleteJob(id)
+            const data = await onAction(id)
 
             if(data.success){
-                removeJob(id)
+                {filterFrontend && filterFrontend(id)}
                 close()
             }
             else{
@@ -41,7 +40,7 @@ export default function JobModal({job,close,removeJob}){
             console.error(err)
         }
         finally{
-            setDeleting(false)
+            setActionStarted(false)
         }
 
         
@@ -77,7 +76,7 @@ export default function JobModal({job,close,removeJob}){
                         <p className="mt-2 whitespace-pre-line text-sm leading-7 text-slate-600">{job.jobDescription}</p>
                     </div>
                     <div className="w-full flex">
-                        <button onClick={()=>handler(job._id)} disabled={deleting} className="bg-red-500 ml-auto px-4 py-2 rounded-lg text-white font-medium mt-4 cursor-pointer hover:bg-red-600 active:scale-[0.97] transition duration-75 ">{deleting? 'Deleting...' : 'Delete Post'}</button>
+                        <button onClick={()=>handler(job._id)} disabled={actionStarted} className="bg-red-500 ml-auto px-4 py-2 rounded-lg text-white font-medium mt-4 cursor-pointer hover:bg-red-600 active:scale-[0.97] transition duration-75 ">{actionStarted? actionLoading : action}</button>
                     </div>
                 </div>
             </article>

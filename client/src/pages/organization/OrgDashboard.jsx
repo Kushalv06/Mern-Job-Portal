@@ -24,7 +24,7 @@ export default function OrgDashboard() {
             addSuffix: true,
             includeSeconds: true,
         })}
-        toView={false}
+        footer={'Go to manage jobs to view'}
     />)
 
     async function loadDashboard() {

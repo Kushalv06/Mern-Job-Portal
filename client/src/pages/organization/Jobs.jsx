@@ -4,6 +4,8 @@ import JobCard from "../../components/JobCard.jsx"
 import JobModal from "../../components/JobModal.jsx"
 import { Link, useNavigate } from "react-router-dom"
 import { formatDistanceToNow } from "date-fns"
+import { deleteJob } from "../../API/organization.js"
+
 
 export default function Jobs() {
     const [jobs, setJobs] = useState([])
@@ -90,7 +92,7 @@ export default function Jobs() {
                                     includeSeconds: true,
                                 })}
                                 onClick={() => setSelectedJob(job)}
-                                toView={true}
+                                footer={'Click to View / Delete'}
                             />
                         ))}
                     </div>
@@ -99,7 +101,10 @@ export default function Jobs() {
                 {selectedJob && <JobModal
                     job={selectedJob}
                     close={closeModal}
-                    removeJob={removeJob}
+                    filterFrontend={removeJob}
+                    action={'Delete'}
+                    onAction={deleteJob}
+                    actionLoading={'deleting...'}
                 />}
             </div>
         </main>

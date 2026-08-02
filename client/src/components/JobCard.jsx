@@ -1,8 +1,9 @@
-export default function JobCard({ title, description, type, location, salary, postedAgo,onClick,toView}) {
+export default function JobCard({ title, description, type, location, salary, postedAgo,onClick,footer,company}) {
     return (
         <article onClick={onClick} className="cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-lg">
             <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
+                    {company && <p className="text-sm font-medium text-blue-700">{company}</p>}
                     <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
                     <p className="mt-1 text-sm text-slate-500">{postedAgo}</p>
                 </div>
@@ -17,7 +18,7 @@ export default function JobCard({ title, description, type, location, salary, po
                 <span>{location}</span>
                 <span className="text-slate-300">|</span>
                 <span className="mr-auto">Salary: {salary}</span>
-                {<p className="text-xs font-medium text-slate-700">{toView? 'Click to View / Delete' : 'Go to manage jobs to view'}</p>}
+                {<p className="text-xs font-medium text-slate-700">{footer}</p>}
             </div>
         </article>
     )
