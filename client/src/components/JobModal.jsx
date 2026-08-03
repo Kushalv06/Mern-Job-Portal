@@ -3,7 +3,6 @@ import { formatDistanceToNow } from "date-fns"
 
 
 export default function JobModal({ job, close, action, onAction, actionLoading, afterSuccess, autoClose }) {
-    console.log(job.applied)
     const [actionStarted, setActionStarted] = useState(false)
 
     useEffect(() => {
@@ -31,7 +30,7 @@ export default function JobModal({ job, close, action, onAction, actionLoading, 
 
             if (data.success) {
                 await afterSuccess(id)
-                { autoClose && close() }
+                if(autoClose) close()
             }
             else {
                 console.log(data.message)
@@ -76,7 +75,7 @@ export default function JobModal({ job, close, action, onAction, actionLoading, 
                         <p className="mt-2 whitespace-pre-line text-sm leading-7 text-slate-600">{job.jobDescription}</p>
                     </div>
                     <div className="w-full flex">
-                        <button onClick={() => handler(job._id)} disabled={job.applied || actionStarted} className={`bg-red-500 px-4 py-2 rounded-lg text-white font-medium mt-4 transition duration-75 ml-auto ${job.applied
+                        <button onClick={() => handler(job._id)} disabled={job.applied || actionStarted} className={`bg-red-500 px-4 py-2 rounded-lg text-white font-medium mt-4 transition duration-75 ml-auto ${job.applied || actionStarted
                             ? "bg-slate-300 text-slate-500 cursor-not-allowed"
                             : "cursor-pointer hover:bg-red-600 active:scale-[0.97]"}`}>{actionStarted ? actionLoading : action}</button>
                     </div>

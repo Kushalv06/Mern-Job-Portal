@@ -101,7 +101,7 @@ export default function Jobs() {
                 {selectedJob && <JobModal
                     job={selectedJob}
                     close={closeModal}
-                    refreshPage={removeJob}
+                    afterSuccess={removeJob}
                     action={'Delete'}
                     onAction={deleteJob}
                     actionLoading={'Deleting...'}
