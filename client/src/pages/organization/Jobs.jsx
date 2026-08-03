@@ -92,7 +92,7 @@ export default function Jobs() {
                                     includeSeconds: true,
                                 })}
                                 onClick={() => setSelectedJob(job)}
-                                footer={'Click to View / Delete'}
+                                footer={'Click to View / Manage'}
                             />
                         ))}
                     </div>

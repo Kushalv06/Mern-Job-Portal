@@ -51,7 +51,7 @@ export async function getJobs() {
 
 export async function deleteJob(id){
     try{
-        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/organization/jobs/${id}`,{
+        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/organization/job/${id}`,{
             method: 'DELETE',
             credentials: 'include'
         })

@@ -12,7 +12,7 @@ export default function JobCard({ title, description, type, location, salary, po
                 </span>
             </div>
 
-            <p className="mt-3 line-clamp-2 text-sm text-slate-600">{description}</p>
+            <p className="mt-3 line-clamp-3 text-sm text-slate-600">{description}</p>
 
             <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-slate-500">
                 <span>{location}</span>
