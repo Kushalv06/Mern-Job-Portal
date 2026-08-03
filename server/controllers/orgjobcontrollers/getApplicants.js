@@ -25,9 +25,11 @@ export async function getApplicants(req, res) {
             .populate('seekerId', 'seekerName email')
             .sort({ createdAt: 1 })
 
+
         return res.status(200).json({
             success: true,
-            applicants
+            applicants,
+            job
         })
     } catch (err) {
         console.error('getApplicants error:', err)
