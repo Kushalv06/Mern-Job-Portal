@@ -10,6 +10,10 @@ const applicationSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Seeker",
         required: true
+    },
+    status: {
+        type:String,
+        default:'Pending'
     }
 }, {
     timestamps: true

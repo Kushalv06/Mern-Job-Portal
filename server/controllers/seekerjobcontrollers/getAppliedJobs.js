@@ -13,6 +13,9 @@ export async function getAppliedJobs(req, res) {
                     select: 'orgName'
                 }
             })
+            .sort({
+                createdAt:-1
+            })
 
 
         return res.status(200).json({
