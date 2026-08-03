@@ -65,3 +65,19 @@ export async function deleteJob(id){
     }
 }
 
+export async function getApplicants(jobId){
+    try{
+        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/organization/job/${jobId}/applicants`, {
+            method: 'GET',
+            credentials: 'include'
+        })
+
+        const data = await res.json()
+        return data
+    }
+    catch(err){
+        console.error(err)
+        alert('Server error')
+    }
+}
+

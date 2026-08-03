@@ -18,7 +18,6 @@ export default function Jobs() {
             const data = await getJobs()
 
             if (data.success) {
-                console.log(data.jobs)
                 setJobs(data.jobs)
             }
             else {
@@ -44,6 +43,10 @@ export default function Jobs() {
 
     function removeJob(id) {
         setJobs(prev => prev.filter(job => job._id !== id))
+    }
+
+    function viewApplications(jobId){
+        navigate(`/organization/jobs/${jobId}/applicants`)
     }
 
     if (loading) {
@@ -106,6 +109,8 @@ export default function Jobs() {
                     onAction={deleteJob}
                     actionLoading={'Deleting...'}
                     autoClose={true}
+                    action2={'View Applicants'}
+                    onAction2={viewApplications}
                 />}
             </div>
         </main>

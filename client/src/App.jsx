@@ -6,6 +6,7 @@ import OrgDashboard from './pages/organization/OrgDashboard.jsx'
 import OrganizationLayout from './layouts/OrganizationLayout.jsx'
 import JobPost from './pages/organization/JobPost.jsx'
 import ManageJobs from './pages/organization/Jobs.jsx'
+import Applicants from './pages/organization/Applicants.jsx'
 
 import SeekerLogin from './pages/jobseeker/SeekerLogin.jsx'
 import SeekerRegister from './pages/jobseeker/SeekerRegister.jsx'
@@ -21,17 +22,22 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/organization/login" element={<OrgLogin />} />
         <Route path="/organization/register" element={<OrgRegister />} />
+
         <Route path="/organization" element={<OrganizationLayout />}>
           <Route path="dashboard" element={<OrgDashboard />} />
           <Route path="job/post" element={<JobPost />} />
           <Route path="jobs" element={<ManageJobs />} />
+          <Route path="jobs/:jobId/applicants" element={<Applicants />} />
         </Route>
+
         <Route path="/jobseeker/login" element={<SeekerLogin />} />
         <Route path="/jobseeker/register" element={<SeekerRegister />} />
+
         <Route path="/jobseeker" element={<SeekerLayout />}>
             <Route path="home" element={<SeekerHome />} />
             <Route path="jobs-applied" element={<JobsApplied />} />
         </Route>
+
       </Routes>
     </>
   )
