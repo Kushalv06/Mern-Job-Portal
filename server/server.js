@@ -6,15 +6,17 @@ import { apiRouter } from './routers/apiRouter.js'
 import connectDb from './config/db.js'
 import MongoStore from "connect-mongo"
 
-const PORT = 8000
+const PORT = process.env.PORT || 8000;
 const secret = process.env.SESSION_SECRET
 
 try{
     await connectDb()
     const app = express()
+    app.set("trust proxy", 1)
     app.use(cors({
         origin: ["http://localhost:5173",
-                "http://10.66.222.189:5173"],
+            process.env.CLIENT_URL
+        ],
         credentials: true
     }))
     app.use(express.json())
@@ -25,10 +27,11 @@ try{
         store: MongoStore.create({
             mongoUrl: process.env.DB_URL_LINK
         }),
-        cookie:{
+        cookie: {
             httpOnly: true,
-            secure: false,
-            sameSite: 'lax'
+            secure: process.env.NODE_ENV === "production",
+            sameSite:
+                process.env.NODE_ENV === "production"? "none" : "lax"
         }
     }))
     app.use('/api', apiRouter)
