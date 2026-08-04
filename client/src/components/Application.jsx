@@ -82,7 +82,7 @@ export default function Application({ job, company, appliedAt, status }) {
                 </span>
                 <span className="text-slate-300">|</span>
                 <span className="flex items-center gap-1 ml-auto">
-                    {job.salary && `₹ ${job.salary.toString().replace(/(\d)(?=(\d{2})+\d$)/g, '$1,')}`}
+                    {job.salary && `${job.salary.toString().replace(/(\d)(?=(\d{2})+\d$)/g, '$1,')}`}
                 </span>
             </div>
 

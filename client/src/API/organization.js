@@ -1,6 +1,6 @@
 export async function getCurrentOrganization() {
     try {
-        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/auth/organization/me`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/organization/me`, {
             method: 'GET',
             credentials: 'include'
         })
@@ -19,7 +19,7 @@ export async function getCurrentOrganization() {
 
 export async function postJob(jobDetails) {
     try {
-        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/organization/jobs`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/organization/jobs`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -36,7 +36,7 @@ export async function postJob(jobDetails) {
 
 export async function getJobs() {
     try {
-        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/organization/jobs`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/organization/jobs`, {
             method: 'GET',
             credentials: 'include'
         })
@@ -49,9 +49,9 @@ export async function getJobs() {
     }
 }
 
-export async function deleteJob(id){
-    try{
-        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/organization/job/${id}`,{
+export async function deleteJob(id) {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/organization/job/${id}`, {
             method: 'DELETE',
             credentials: 'include'
         })
@@ -59,15 +59,15 @@ export async function deleteJob(id){
         const data = await res.json()
         return data
     }
-    catch(err){
+    catch (err) {
         console.error(err)
         alert('Server error')
     }
 }
 
-export async function getApplicants(jobId){
-    try{
-        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/organization/job/${jobId}/applicants`, {
+export async function getApplicants(jobId) {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/organization/job/${jobId}/applicants`, {
             method: 'GET',
             credentials: 'include'
         })
@@ -75,15 +75,15 @@ export async function getApplicants(jobId){
         const data = await res.json()
         return data
     }
-    catch(err){
+    catch (err) {
         console.error(err)
         alert('Server error')
     }
 }
 
-export async function updateApplication(applicationId, status){
-    try{
-        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/organization/applications/${applicationId}`, {
+export async function updateApplication(applicationId, status) {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/organization/applications/${applicationId}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -93,7 +93,7 @@ export async function updateApplication(applicationId, status){
         const data = await res.json()
         return data
     }
-    catch(err){
+    catch (err) {
         console.error(err)
         alert('Server error')
     }

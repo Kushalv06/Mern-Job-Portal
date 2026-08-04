@@ -1,6 +1,6 @@
 export async function orgLogin(credentials) {
     try {
-        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/auth/organization/login`, {
+        const res = await fetch(`${import.meta.env.VITE_API_DOMAIN}/api/auth/organization/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -21,7 +21,7 @@ export async function orgLogin(credentials) {
 
 export async function orgRegister(credentials) {
     try {
-        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/auth/organization/register`, {
+        const res = await fetch(`${import.meta.env.VITE_API_DOMAIN}/api/auth/organization/register`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: "include",
@@ -39,7 +39,7 @@ export async function orgRegister(credentials) {
 
 export async function orgSignOut(){
     try{
-        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/auth/organization/signout`,{
+        const res = await fetch(`${import.meta.env.VITE_API_DOMAIN}/api/auth/organization/signout`,{
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             credentials: 'include'
@@ -56,7 +56,7 @@ export async function orgSignOut(){
 
 export async function seekerLogin(credentials) {
     try {
-        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/auth/jobseeker/login`, {
+        const res = await fetch(`${import.meta.env.VITE_API_DOMAIN}/api/auth/jobseeker/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -75,7 +75,7 @@ export async function seekerLogin(credentials) {
 
 export async function seekerRegister(credentials) {
     try{
-        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/auth/jobseeker/register`,{
+        const res = await fetch(`${import.meta.env.VITE_API_DOMAIN}/api/auth/jobseeker/register`,{
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -94,7 +94,7 @@ export async function seekerRegister(credentials) {
 
 export async function seekerSignOut(){
     try{
-        const res = await fetch(`http://${import.meta.env.VITE_API_DOMAIN}:8000/api/auth/jobseeker/signout`,{
+        const res = await fetch(`${import.meta.env.VITE_API_DOMAIN}/api/auth/jobseeker/signout`,{
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             credentials: 'include'

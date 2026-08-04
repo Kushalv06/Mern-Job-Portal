@@ -18,8 +18,6 @@ export default function Applicants() {
             const data = await getApplicants(jobId)
 
             if (data.success) {
-                console.log(data.applicants)
-                console.log(data.job)
                 setApplications(data.applicants)
                 setJob(data.job)
             } else {
@@ -87,7 +85,7 @@ export default function Applicants() {
                         <span>📍 {job.location}</span>
 
                         <span className="font-medium text-slate-800">
-                            ₹ {Number(job.salary).toLocaleString("en-IN")}
+                            {job.salary}
                         </span>
                     </div>
                 </div>
