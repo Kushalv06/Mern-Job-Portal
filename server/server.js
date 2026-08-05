@@ -34,6 +34,9 @@ try{
                 process.env.NODE_ENV === "production"? "none" : "lax"
         }
     }))
+    app.get("/", (req, res) => {
+        res.status(200).send("Job Portal Backend is running");
+    });
     app.use('/api', apiRouter)
     app.listen(PORT, () => console.log("Server listening on Port",PORT))
 }
