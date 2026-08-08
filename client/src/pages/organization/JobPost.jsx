@@ -46,13 +46,12 @@ export default function JobPost() {
             const data = await postJob({ jobTitle, jobDescription, location, jobType, salary })
 
             if (data.success) {
-                toast(data.message)
+                toast.info(data.message)
                 form.reset()
             }
             else {
-                console.log(data.message)
                 if (data.message === 'Unauthorized') navigate("/organization/login")
-                else toast(data.message)
+                else toast.error(data.message)
             }
 
         }

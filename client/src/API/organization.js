@@ -31,7 +31,7 @@ export async function postJob(jobDetails) {
         return data
     }
     catch (err) {
-        toast('Server error')
+        toast.error('Server error')
     }
 }
 
@@ -46,7 +46,7 @@ export async function getJobs() {
         return data
     }
     catch (err) {
-        toast('Server error')
+        toast.error('Server error')
     }
 }
 
@@ -62,7 +62,7 @@ export async function deleteJob(id) {
     }
     catch (err) {
         console.error(err)
-        toast('Server error')
+        toast.error('Server error')
     }
 }
 
@@ -78,7 +78,7 @@ export async function getApplicants(jobId) {
     }
     catch (err) {
         console.error(err)
-        toast('Server error')
+        toast.error('Server error')
     }
 }
 
@@ -96,7 +96,7 @@ export async function updateApplication(applicationId, status) {
     }
     catch (err) {
         console.error(err)
-        toast('Server error')
+        toast.error('Server error')
     }
 }
 

@@ -49,7 +49,7 @@ export default function OrgLogin() {
             }
         }
         catch (err) {
-            toast("Server error")
+            toast.error("Server error")
         }
         finally{
             cancelColdStartTimer()

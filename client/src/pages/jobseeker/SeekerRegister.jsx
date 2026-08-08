@@ -17,7 +17,7 @@ export default function SeekerRegister() {
         const confirmedPassword = formData.get("confirmedPassword")
 
         if (password !== confirmedPassword) {
-            toast("Please ensure password and confirmed password are same")
+            toast.warning("Please ensure password and confirmed password are same")
             return
         }
 
@@ -29,11 +29,11 @@ export default function SeekerRegister() {
                 navigate('/jobseeker/home')
             }
             else {
-                toast(data.message)
+                toast.error(data.message)
             }
         }
         catch (err) {
-            toast(err)
+            toast.error(err)
             console.error(err)
         }
         finally{

@@ -45,12 +45,12 @@ export default function SeekerLogin() {
                 navigate('/jobseeker/home')
             }
             else {
-                toast(data.message)
+                toast.error(data.message)
             }
         }
         catch (err) {
             console.error(err)
-            toast(err)
+            toast.error(err)
         }
     }
 

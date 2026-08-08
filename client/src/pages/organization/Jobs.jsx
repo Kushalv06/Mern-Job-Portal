@@ -25,7 +25,7 @@ export default function Jobs() {
             }
             else {
                 if (data.message === 'Unauthorized') navigate('/organization/login')
-                else toast(data.message)
+                else toast.error(data.message)
             }
         }
         catch (err) {

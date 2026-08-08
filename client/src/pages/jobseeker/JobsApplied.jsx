@@ -20,7 +20,7 @@ export default function JobsApplied() {
                 setApplicationsData(data.appliedJobs)
             } else {
                 if (data.message === 'Unauthorized') navigate('/jobseeker/login')
-                else toast(data.message)
+                else toast.error(data.message)
             }
         } catch (err) {
             console.error(err)

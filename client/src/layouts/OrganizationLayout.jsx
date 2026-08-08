@@ -40,11 +40,11 @@ export default function OrganizationLayout() {
                 navigate('/')
             }
             else {
-                toast(data.message)
+                toast.error(data.message)
             }
         }
         catch (err) {
-            toast(err)
+            toast.error(err)
         }
         finally {
             cancelColdStartTimer()

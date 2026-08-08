@@ -31,7 +31,7 @@ export default function OrgRegister() {
                 console.log("User registered")
             }
             else {
-                toast(data.message)
+                toast.error(data.message)
             }
         }
         catch (err) {

@@ -25,7 +25,7 @@ export default function Applicants() {
                 setJob(data.job)
             } else {
                 if (data.message === 'Unauthorized') navigate('/organization/login')
-                else toast(data.message)
+                else toast.error(data.message)
             }
         } catch (err) {
             console.error(err)
@@ -48,7 +48,7 @@ export default function Applicants() {
                 await loadApplicants()
             } else {
                 if (data.message === 'Unauthorized') navigate('/organization/login')
-                else toast(data.message)
+                else toast.error(data.message)
             }
         } catch (err) {
             console.error(err)
