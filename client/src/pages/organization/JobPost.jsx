@@ -2,24 +2,30 @@ import { postJob } from "../../API/organization"
 import { useNavigate } from "react-router-dom"
 import { getCurrentOrganization } from "../../API/organization"
 import { useEffect } from "react"
+import { toast } from "react-toastify"
+import { startColdStartTimer } from "../../API/delayTimer.js"
 
 export default function JobPost() {
     const navigate = useNavigate()
 
-    async function checkAuth(){
-        try{
+    async function checkAuth() {
+        const cancelColdStartTimer = startColdStartTimer()
+        try {
             await getCurrentOrganization()
         }
-        catch(err){
+        catch (err) {
             console.error(err)
             navigate('/organization/login')
             return
         }
+        finally {
+            cancelColdStartTimer()
+        }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         checkAuth()
-    },[])
+    }, [])
 
 
     async function handleForm(event) {
@@ -35,22 +41,26 @@ export default function JobPost() {
         const jobType = formData.get('jobType')
         const salary = formData.get('salary').trim()
 
+        const cancelColdStartTimer = startColdStartTimer()
         try {
             const data = await postJob({ jobTitle, jobDescription, location, jobType, salary })
 
             if (data.success) {
-                alert(data.message)
+                toast(data.message)
                 form.reset()
             }
             else {
                 console.log(data.message)
-                if(data.message === 'Unauthorized') navigate("/organization/login")
-                else alert(data.message)
+                if (data.message === 'Unauthorized') navigate("/organization/login")
+                else toast(data.message)
             }
 
         }
         catch (err) {
             console.log(err)
+        }
+        finally {
+            cancelColdStartTimer()
         }
 
     }

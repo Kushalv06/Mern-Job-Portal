@@ -3,24 +3,33 @@ import { seekerLogin } from "../../API/auth.js"
 import { getCurrentSeeker } from "../../API/seeker.js"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
+import { toast } from "react-toastify"
+import { startColdStartTimer } from "../../API/delayTimer.js"
 
 export default function SeekerLogin() {
     const navigate = useNavigate()
 
-    async function checkAuth(){
-        try{
+    async function checkAuth() {
+        const cancelColdStartTimer = startColdStartTimer()
+
+        try {
+            
             const data = await getCurrentSeeker()
-            if(data.success) navigate('/jobseeker/home')
+
+            if (data.success) navigate('/jobseeker/home')
         }
-        catch(err){
+        catch (err) {
             // User is not authenticated.
             // Stay on the login page.
         }
+        finally{
+            cancelColdStartTimer()
+        }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         checkAuth()
-    },[])
+    }, [])
 
     async function handleSeekerLogin(event) {
         event.preventDefault()
@@ -28,7 +37,7 @@ export default function SeekerLogin() {
         const email = formData.get("email").toLowerCase().trim()
         const password = formData.get("password")
 
-        try{
+        try {
             const data = await seekerLogin({ email, password })
 
             if (data.success) {
@@ -36,12 +45,12 @@ export default function SeekerLogin() {
                 navigate('/jobseeker/home')
             }
             else {
-                alert(data.message)
+                toast(data.message)
             }
         }
-        catch(err){
+        catch (err) {
             console.error(err)
-            alert(err)
+            toast(err)
         }
     }
 
@@ -49,7 +58,7 @@ export default function SeekerLogin() {
         <div className="flex flex-col justify-center items-center h-dvh bg-slate-50 px-4">
             <p className="mb-6 text-blue-500 text-2xl text-center font-bold">Login as Seeker to Find a Job</p>
 
-            <LoginForm 
+            <LoginForm
                 emailPlaceholder={"jack123@gamil.com"}
                 formHandler={handleSeekerLogin}
                 registerLink={"/jobseeker/register"}

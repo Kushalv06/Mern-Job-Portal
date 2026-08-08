@@ -1,6 +1,8 @@
 import RegisterForm from "../../components/RegisterForm"
 import { seekerRegister } from "../../API/auth"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+import { startColdStartTimer } from "../../API/delayTimer.js"
 
 export default function SeekerRegister() {
     const navigate = useNavigate()
@@ -15,11 +17,11 @@ export default function SeekerRegister() {
         const confirmedPassword = formData.get("confirmedPassword")
 
         if (password !== confirmedPassword) {
-            alert("Please ensure password and confirmed password are same")
+            toast("Please ensure password and confirmed password are same")
             return
         }
 
-
+        const cancelColdStartTimer = startColdStartTimer()
         try {
             const data = await seekerRegister({ seekerName, email, password })
             if (data.success) {
@@ -27,12 +29,15 @@ export default function SeekerRegister() {
                 navigate('/jobseeker/home')
             }
             else {
-                alert(data.message)
+                toast(data.message)
             }
         }
         catch (err) {
-            alert(err)
+            toast(err)
             console.error(err)
+        }
+        finally{
+            cancelColdStartTimer()
         }
 
     }

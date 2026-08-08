@@ -2,6 +2,8 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { getAppliedJobs } from "../../API/seeker.js"
 import Application from "../../components/Application.jsx"
+import { toast } from "react-toastify"
+import { startColdStartTimer } from "../../API/delayTimer.js"
 import Loading from "../../components/Loading.jsx"
 
 export default function JobsApplied() {
@@ -11,18 +13,20 @@ export default function JobsApplied() {
 
     async function loadApplications() {
         setLoading(true)
+        const cancelColdStartTimer = startColdStartTimer()
         try {
             const data = await getAppliedJobs()
             if (data.success) {
                 setApplicationsData(data.appliedJobs)
             } else {
                 if (data.message === 'Unauthorized') navigate('/jobseeker/login')
-                else alert(data.message)
+                else toast(data.message)
             }
         } catch (err) {
             console.error(err)
         } finally {
             setLoading(false)
+            cancelColdStartTimer()
         }
     }
 

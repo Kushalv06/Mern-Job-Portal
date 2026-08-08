@@ -5,6 +5,8 @@ import JobModal from "../../components/JobModal.jsx"
 import { Link, useNavigate } from "react-router-dom"
 import { formatDistanceToNow } from "date-fns"
 import { deleteJob } from "../../API/organization.js"
+import { toast } from "react-toastify"
+import { startColdStartTimer } from "../../API/delayTimer.js"
 
 
 export default function Jobs() {
@@ -14,6 +16,7 @@ export default function Jobs() {
     const navigate = useNavigate()
 
     async function init() {
+        const cancelColdStartTimer = startColdStartTimer()
         try {
             const data = await getJobs()
 
@@ -22,7 +25,7 @@ export default function Jobs() {
             }
             else {
                 if (data.message === 'Unauthorized') navigate('/organization/login')
-                else alert(data.message)
+                else toast(data.message)
             }
         }
         catch (err) {
@@ -30,6 +33,7 @@ export default function Jobs() {
         }
         finally {
             setLoading(false)
+            cancelColdStartTimer()
         }
     }
 
@@ -45,7 +49,7 @@ export default function Jobs() {
         setJobs(prev => prev.filter(job => job._id !== id))
     }
 
-    function viewApplications(jobId){
+    function viewApplications(jobId) {
         navigate(`/organization/jobs/${jobId}/applicants`)
     }
 

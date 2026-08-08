@@ -403,7 +403,7 @@ Join our security team to protect enterprise applications and infrastructure fro
 
 Responsibilities
 
-• Monitor security alerts.
+• Monitor security toasts.
 • Perform vulnerability assessments.
 • Investigate incidents.
 • Prepare security reports.

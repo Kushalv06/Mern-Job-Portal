@@ -15,6 +15,7 @@ import JobsApplied from './pages/jobseeker/JobsApplied.jsx'
 import SeekerLayout from './layouts/SeekerLayout.jsx'
 import './index.css'
 
+
 function App() {
   return (
     <>

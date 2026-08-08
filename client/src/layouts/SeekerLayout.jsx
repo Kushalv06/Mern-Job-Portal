@@ -2,14 +2,17 @@ import { useEffect, useState } from "react"
 import { Outlet, useNavigate, NavLink } from "react-router-dom"
 import { getCurrentSeeker } from "../API/seeker"
 import { seekerSignOut } from "../API/auth"
+import { toast } from "react-toastify"
+import { startColdStartTimer } from "../API/delayTimer.js"
 import Loading from "../components/Loading.jsx"
 
-export default function SeekerLayout(){
+export default function SeekerLayout() {
     const [seekerName, setSeekerName] = useState("")
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
 
     async function loadSeeker() {
+        const cancelColdStartTimer = startColdStartTimer()
         try {
             const data = await getCurrentSeeker();
             setSeekerName(data.seekerName);
@@ -18,8 +21,9 @@ export default function SeekerLayout(){
             console.error(err);
             navigate("/jobseeker/login");
         }
-        finally{
+        finally {
             setLoading(false)
+            cancelColdStartTimer()
         }
     }
 
@@ -28,6 +32,7 @@ export default function SeekerLayout(){
     }, []);
 
     async function handleSignOut() {
+        const cancelColdStartTimer = startColdStartTimer()
         try {
             const data = await seekerSignOut()
 
@@ -35,11 +40,14 @@ export default function SeekerLayout(){
                 navigate('/')
             }
             else {
-                alert(data.message)
+                toast(data.message)
             }
         }
         catch (err) {
-            alert(err)
+            toast(err)
+        }
+        finally {
+            cancelColdStartTimer()
         }
     }
 

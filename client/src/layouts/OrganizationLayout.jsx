@@ -2,32 +2,37 @@ import { useEffect, useState } from "react"
 import { Outlet, useNavigate, NavLink } from "react-router-dom"
 import { getCurrentOrganization } from "../API/organization"
 import { orgSignOut } from "../API/auth"
+import { toast } from "react-toastify"
+import { startColdStartTimer } from "../API/delayTimer.js"
 import Loading from "../components/Loading.jsx"
 
-export default function OrganizationLayout(){
+export default function OrganizationLayout() {
     const [orgName, setOrgName] = useState("")
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
 
     async function loadOrganization() {
-    try {
-        const data = await getCurrentOrganization();
-        setOrgName(data.orgName);
+        const cancelColdStartTimer = startColdStartTimer()
+        try {
+            const data = await getCurrentOrganization();
+            setOrgName(data.orgName);
         }
-    catch (err) {
-        console.error(err);
-        navigate("/organization/login");
+        catch (err) {
+            console.error(err);
+            navigate("/organization/login");
         }
-    finally{
-        setLoading(false)
+        finally {
+            setLoading(false)
+            cancelColdStartTimer()
+        }
     }
-}
 
     useEffect(() => {
         loadOrganization();
     }, []);
 
     async function handleSignOut() {
+        const cancelColdStartTimer = startColdStartTimer()
         try {
             const data = await orgSignOut()
 
@@ -35,11 +40,14 @@ export default function OrganizationLayout(){
                 navigate('/')
             }
             else {
-                alert(data.message)
+                toast(data.message)
             }
         }
         catch (err) {
-            alert(err)
+            toast(err)
+        }
+        finally {
+            cancelColdStartTimer()
         }
     }
 

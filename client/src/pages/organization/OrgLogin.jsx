@@ -3,46 +3,56 @@ import { getCurrentOrganization } from "../../API/organization.js"
 import { orgLogin } from "../../API/auth.js"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
+import { toast } from "react-toastify"
+import { startColdStartTimer } from "../../API/delayTimer.js"
 
 export default function OrgLogin() {
     const navigate = useNavigate()
 
-    async function checkAuth(){
-        try{
+    async function checkAuth() {
+        const cancelColdStartTimer = startColdStartTimer()
+        try {
             const data = await getCurrentOrganization()
-            if(data.success) navigate('/organization/dashboard')
+            if (data.success) navigate('/organization/dashboard')
         }
-        catch(err){
+        catch (err) {
             // User is not authenticated.
             // Stay on the login page.
         }
+        finally{
+            cancelColdStartTimer()
+        }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         checkAuth()
-    },[])
+    }, [])
 
-    async function handleForm(event){
+    async function handleForm(event) {
         event.preventDefault()
         const formData = new FormData(event.currentTarget)
         const email = formData.get("email").toLowerCase().trim()
         const password = formData.get("password")
 
         const orgCredentials = { email, password }
+        const cancelColdStartTimer = startColdStartTimer()
 
-        try{
+        try {
             const data = await orgLogin(orgCredentials)
-    
+
             if (data.success) {
                 console.log(data.message)
                 navigate("/organization/dashboard")
             }
             else {
-                alert(data.message)
+                toast(data.message)
             }
         }
-        catch(err){
-            alert("Server error")
+        catch (err) {
+            toast("Server error")
+        }
+        finally{
+            cancelColdStartTimer()
         }
     }
 

@@ -1,6 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { getApplicants, updateApplication } from "../../API/organization.js"
+import { toast } from "react-toastify"
+import { startColdStartTimer } from "../../API/delayTimer.js"
 import ApplicantCard from "../../components/ApplicantCard.jsx"
 import Loading from "../../components/Loading.jsx"
 import { Link } from "react-router-dom"
@@ -9,11 +11,12 @@ export default function Applicants() {
     const { jobId } = useParams()
     const navigate = useNavigate()
     const [applications, setApplications] = useState([])
-    const [job,setJob] = useState(null)
+    const [job, setJob] = useState(null)
     const [loading, setLoading] = useState(true)
 
     async function loadApplicants() {
         setLoading(true)
+        const cancelColdStartTimer = startColdStartTimer()
         try {
             const data = await getApplicants(jobId)
 
@@ -22,12 +25,13 @@ export default function Applicants() {
                 setJob(data.job)
             } else {
                 if (data.message === 'Unauthorized') navigate('/organization/login')
-                else alert(data.message)
+                else toast(data.message)
             }
         } catch (err) {
             console.error(err)
         } finally {
             setLoading(false)
+            cancelColdStartTimer()
         }
     }
 
@@ -36,6 +40,7 @@ export default function Applicants() {
     }, [])
 
     async function updateStatus(applicationId, status) {
+        const cancelColdStartTimer = startColdStartTimer()
         try {
             const data = await updateApplication(applicationId, status)
 
@@ -43,10 +48,12 @@ export default function Applicants() {
                 await loadApplicants()
             } else {
                 if (data.message === 'Unauthorized') navigate('/organization/login')
-                else alert(data.message)
+                else toast(data.message)
             }
         } catch (err) {
             console.error(err)
+        } finally {
+            cancelColdStartTimer()
         }
     }
 

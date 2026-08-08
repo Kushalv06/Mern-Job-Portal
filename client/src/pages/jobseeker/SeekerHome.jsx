@@ -4,6 +4,8 @@ import { formatDistanceToNow } from "date-fns"
 import JobCard from "../../components/JobCard.jsx"
 import JobModal from "../../components/JobModal.jsx"
 import { getJobs, applyJob } from "../../API/seeker"
+import { toast } from "react-toastify"
+import { startColdStartTimer } from "../../API/delayTimer.js"
 
 export default function SeekerHome() {
     const context = useOutletContext()
@@ -15,6 +17,7 @@ export default function SeekerHome() {
     const [appliedJobs, setAppliedJobs] = useState(new Set())
 
     async function fetchJobs() {
+        const cancelColdStartTimer = startColdStartTimer()
         try {
             const data = await getJobs()
 
@@ -25,7 +28,7 @@ export default function SeekerHome() {
             }
             else {
                 if (data.message === 'Unauthorized') navigate('/jobseeker/login')
-                else alert(data.message)
+                else toast(data.message)
             }
         }
         catch (err) {
@@ -33,6 +36,7 @@ export default function SeekerHome() {
         }
         finally {
             setLoading(false)
+            cancelColdStartTimer()
         }
     }
 
@@ -45,7 +49,7 @@ export default function SeekerHome() {
     }
 
     async function refreshPage() {
-        setSelectedJob(prev => ({...prev,applied:true}))
+        setSelectedJob(prev => ({ ...prev, applied: true }))
         await fetchJobs()
     }
 

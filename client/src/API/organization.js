@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify'
 export async function getCurrentOrganization() {
     try {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/organization/me`, {
@@ -30,7 +31,7 @@ export async function postJob(jobDetails) {
         return data
     }
     catch (err) {
-        alert('Server error')
+        toast('Server error')
     }
 }
 
@@ -45,7 +46,7 @@ export async function getJobs() {
         return data
     }
     catch (err) {
-        alert('Server error')
+        toast('Server error')
     }
 }
 
@@ -61,7 +62,7 @@ export async function deleteJob(id) {
     }
     catch (err) {
         console.error(err)
-        alert('Server error')
+        toast('Server error')
     }
 }
 
@@ -77,7 +78,7 @@ export async function getApplicants(jobId) {
     }
     catch (err) {
         console.error(err)
-        alert('Server error')
+        toast('Server error')
     }
 }
 
@@ -95,7 +96,7 @@ export async function updateApplication(applicationId, status) {
     }
     catch (err) {
         console.error(err)
-        alert('Server error')
+        toast('Server error')
     }
 }
 
