@@ -2,12 +2,13 @@ import LoginForm from "../../components/LoginForm.jsx"
 import { seekerLogin } from "../../API/auth.js"
 import { getCurrentSeeker } from "../../API/seeker.js"
 import { useNavigate } from "react-router-dom"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { startColdStartTimer } from "../../API/delayTimer.js"
 
 export default function SeekerLogin() {
     const navigate = useNavigate()
+    const [submitting, setSubmitting] = useState(false)
 
     async function checkAuth() {
         const cancelColdStartTimer = startColdStartTimer()
@@ -37,6 +38,8 @@ export default function SeekerLogin() {
         const email = formData.get("email").toLowerCase().trim()
         const password = formData.get("password")
 
+        setSubmitting(true)
+        const cancelColdStartTimer = startColdStartTimer()
         try {
             const data = await seekerLogin({ email, password })
 
@@ -52,6 +55,10 @@ export default function SeekerLogin() {
             console.error(err)
             toast.error(err)
         }
+        finally{
+            setSubmitting(false)
+            cancelColdStartTimer()
+        }
     }
 
     return (
@@ -62,6 +69,7 @@ export default function SeekerLogin() {
                 emailPlaceholder={"jack123@gamil.com"}
                 formHandler={handleSeekerLogin}
                 registerLink={"/jobseeker/register"}
+                isSubmitting={submitting}
             />
         </div>
     )

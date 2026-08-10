@@ -1,11 +1,13 @@
 import RegisterForm from "../../components/RegisterForm"
 import { orgRegister } from "../../API/auth"
 import { useNavigate } from 'react-router-dom'
+import { useState } from "react"
 import { toast } from "react-toastify"
 import { startColdStartTimer } from "../../API/delayTimer.js"
 
 export default function OrgRegister() {
     const navigate = useNavigate()
+    const [submitting, setSubmitting] = useState(false)
     async function handleForm(event) {
         event.preventDefault()
         const formData = new FormData(event.currentTarget)
@@ -16,12 +18,13 @@ export default function OrgRegister() {
         const confirmedPassword = formData.get("confirmedPassword")
 
         if (password !== confirmedPassword) {
-            toast("Please ensure password and confirmed password are same")
+            toast.warning("Please ensure password and confirmed password are same")
             return
         }
 
         const orgCredentials = { orgName, email, password }
 
+        setSubmitting(true)
         const cancelColdStartTimer = startColdStartTimer()
         try {
             const data = await orgRegister(orgCredentials)
@@ -35,9 +38,10 @@ export default function OrgRegister() {
             }
         }
         catch (err) {
-            toast("Server error")
+            toast.error("Server error")
         }
         finally{
+            setSubmitting(false)
             cancelColdStartTimer()
         }
 
@@ -53,6 +57,7 @@ export default function OrgRegister() {
                 namePlaceholder="Ex: Google"
                 emailPlaceholder="Ex: google123@gmail.com"
                 loginLink="/organization/login"
+                isSubmitting={submitting}
             />
         </div>
     )

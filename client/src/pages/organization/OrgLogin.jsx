@@ -2,12 +2,13 @@ import LoginForm from "../../components/LoginForm.jsx"
 import { getCurrentOrganization } from "../../API/organization.js"
 import { orgLogin } from "../../API/auth.js"
 import { useNavigate } from "react-router-dom"
-import { useEffect } from "react"
+import { useState,useEffect } from "react"
 import { toast } from "react-toastify"
 import { startColdStartTimer } from "../../API/delayTimer.js"
 
 export default function OrgLogin() {
     const navigate = useNavigate()
+    const [submitting, setSubmitting] = useState(false)
 
     async function checkAuth() {
         const cancelColdStartTimer = startColdStartTimer()
@@ -35,6 +36,7 @@ export default function OrgLogin() {
         const password = formData.get("password")
 
         const orgCredentials = { email, password }
+        setSubmitting(true)
         const cancelColdStartTimer = startColdStartTimer()
 
         try {
@@ -45,13 +47,14 @@ export default function OrgLogin() {
                 navigate("/organization/dashboard")
             }
             else {
-                toast(data.message)
+                toast.error(data.message)
             }
         }
         catch (err) {
             toast.error("Server error")
         }
         finally{
+            setSubmitting(false)
             cancelColdStartTimer()
         }
     }
@@ -63,6 +66,7 @@ export default function OrgLogin() {
                 emailPlaceholder={"google123@gamil.com"}
                 formHandler={handleForm}
                 registerLink={"/organization/register"}
+                isSubmitting={submitting}
             />
         </div>
     )

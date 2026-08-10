@@ -1,11 +1,13 @@
 import RegisterForm from "../../components/RegisterForm"
 import { seekerRegister } from "../../API/auth"
-import { useNavigate } from "react-router-dom"
+import { useNavigate} from "react-router-dom"
+import { useState } from "react"
 import { toast } from "react-toastify"
 import { startColdStartTimer } from "../../API/delayTimer.js"
 
 export default function SeekerRegister() {
     const navigate = useNavigate()
+    const [submitting, setSubmitting] = useState(false)
 
     async function handleSeekerRegister(event) {
         event.preventDefault()
@@ -21,6 +23,7 @@ export default function SeekerRegister() {
             return
         }
 
+        setSubmitting(true)
         const cancelColdStartTimer = startColdStartTimer()
         try {
             const data = await seekerRegister({ seekerName, email, password })
@@ -37,6 +40,7 @@ export default function SeekerRegister() {
             console.error(err)
         }
         finally{
+            setSubmitting(false)
             cancelColdStartTimer()
         }
 
@@ -51,7 +55,8 @@ export default function SeekerRegister() {
                 nameFieldName="seekerName"
                 namePlaceholder="Ex: Jack"
                 emailPlaceholder="Ex: jack123@gmail.com"
-                loginLink="/jobseeker/login"
+                loginLink="/jobseeker/register"
+                isSubmitting={submitting}
             />
         </div>
     )

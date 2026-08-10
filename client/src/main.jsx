@@ -13,7 +13,9 @@ createRoot(document.getElementById('root')).render(
       <ToastContainer 
         position='top-center'
         newestOnTop
-        pauseOnHover />
+        pauseOnHover
+        autoClose={1500}
+         />
     </BrowserRouter>
   </StrictMode>,
 )

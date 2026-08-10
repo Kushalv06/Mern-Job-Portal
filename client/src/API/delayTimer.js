@@ -7,13 +7,15 @@ export function startColdStartTimer(){
          toastId = toast.info("Connecting to the server… The first request may take up to 20–30 seconds because the app is hosted on a free server. Thank you for your patience.",{
             style: {
                 width: "70vw",
-                maxwidth:"600px"
-        }
+                maxWidth:"600px"
+        },
+        autoClose : false
          })
     },2500)
 
     function cancelColdStartTimer(){
-    clearTimeout(waiting)
+        if(toastId) toast.dismiss(toastId)
+        clearTimeout(waiting)
     }
 
     return cancelColdStartTimer
