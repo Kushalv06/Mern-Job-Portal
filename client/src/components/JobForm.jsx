@@ -6,7 +6,8 @@ export default function JobForm({
     jobType = "",
     salary = "",
     disableJobTitle = false,
-    submitLabel = "Post Job"
+    submitLabel = "Post Job",
+    isSubmitting = false
 }) {
     return (
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
@@ -80,8 +81,16 @@ export default function JobForm({
                     />
                 </div>
 
-                <button className="inline-flex rounded-lg bg-blue-600 px-5 py-2.5 font-medium text-white transition hover:bg-blue-700 active:scale-[0.99]" type="submit">
-                    {submitLabel}
+                <button
+                    className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 font-medium text-white transition hover:bg-blue-700 active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-blue-400 w-35"
+                    type="submit"
+                    disabled={isSubmitting}
+                >
+                    {isSubmitting ? (
+                        <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                    ) : (
+                        submitLabel
+                    )}
                 </button>
             </form>
         </div>

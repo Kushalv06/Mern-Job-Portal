@@ -1,13 +1,14 @@
+import { useEffect, useState } from "react"
 import { postJob } from "../../API/organization"
 import { useNavigate } from "react-router-dom"
 import { getCurrentOrganization } from "../../API/organization"
-import { useEffect } from "react"
 import { toast } from "react-toastify"
 import { startColdStartTimer } from "../../API/delayTimer.js"
 import JobForm from "../../components/JobForm.jsx"
 
 export default function JobPost() {
     const navigate = useNavigate()
+    const [submitting, setSubmitting] = useState(false)
 
     async function checkAuth() {
         const cancelColdStartTimer = startColdStartTimer()
@@ -42,6 +43,7 @@ export default function JobPost() {
         const jobType = formData.get('jobType')
         const salary = formData.get('salary').trim()
 
+        setSubmitting(true)
         const cancelColdStartTimer = startColdStartTimer()
         try {
             const data = await postJob({ jobTitle, jobDescription, location, jobType, salary })
@@ -49,6 +51,7 @@ export default function JobPost() {
             if (data.success) {
                 toast.success(data.message)
                 form.reset()
+                navigate('/organization/jobs')
             }
             else {
                 if (data.message === 'Unauthorized') navigate("/organization/login")
@@ -60,6 +63,7 @@ export default function JobPost() {
             console.log(err)
         }
         finally {
+            setSubmitting(false)
             cancelColdStartTimer()
         }
 
@@ -72,7 +76,7 @@ export default function JobPost() {
                     <p className="mt-2 text-slate-600">Fill in the details below to create a new job posting.</p>
                 </div>
 
-                <JobForm onSubmit={handleForm} />
+                <JobForm onSubmit={handleForm} isSubmitting={submitting} />
             </div>
         </main>
     )

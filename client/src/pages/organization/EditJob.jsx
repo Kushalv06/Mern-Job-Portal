@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams, Link } from "react-router-dom"
 import { toast } from "react-toastify"
 import { getJob, updateJob } from "../../API/organization.js"
 import { startColdStartTimer } from "../../API/delayTimer.js"
@@ -12,6 +12,7 @@ export default function EditJob() {
     const navigate = useNavigate()
     const [job, setJob] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [submitting, setSubmitting] = useState(false)
     const [notFound, setNotFound] = useState(false)
 
     useEffect(() => {
@@ -22,6 +23,7 @@ export default function EditJob() {
 
             try {
                 const data = await getJob(jobId)
+                console.log(data.job)
 
                 if (data?.success) {
                     setJob(data.job)
@@ -55,8 +57,10 @@ export default function EditJob() {
         const jobDescription = formData.get('jobDescription').trim()
         const location = formData.get('location').trim()
         const jobType = formData.get('jobType')
+        console.log(jobType)
         const salary = formData.get('salary').trim()
 
+        setSubmitting(true)
         const cancelColdStartTimer = startColdStartTimer()
 
         try {
@@ -81,6 +85,7 @@ export default function EditJob() {
             console.error(err)
         }
         finally {
+            setSubmitting(false)
             cancelColdStartTimer()
         }
     }
@@ -99,7 +104,13 @@ export default function EditJob() {
     }
 
     return (
-        <main className="min-h-screen bg-slate-50 px-4 py-10">
+        <main className="min-h-screen bg-slate-50 px-4 py-5">
+            <Link
+                    to="/organization/jobs"
+                    className="mb-5 inline-flex items-center gap-2 text-sm font-medium text-blue-600 transition hover:text-blue-700"
+                >
+                    ← Back to Manage Jobs
+            </Link>
             <div className="mx-auto max-w-3xl">
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-slate-900">Edit Job</h1>
@@ -115,6 +126,7 @@ export default function EditJob() {
                     disableJobTitle={true}
                     submitLabel="Save Changes"
                     onSubmit={handleForm}
+                    isSubmitting={submitting}
                 />
             </div>
         </main>
