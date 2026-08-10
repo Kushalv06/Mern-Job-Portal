@@ -7,6 +7,7 @@ import OrganizationLayout from './layouts/OrganizationLayout.jsx'
 import JobPost from './pages/organization/JobPost.jsx'
 import ManageJobs from './pages/organization/Jobs.jsx'
 import Applicants from './pages/organization/Applicants.jsx'
+import EditJob from './pages/organization/EditJob.jsx'
 
 import SeekerLogin from './pages/jobseeker/SeekerLogin.jsx'
 import SeekerRegister from './pages/jobseeker/SeekerRegister.jsx'
@@ -29,6 +30,7 @@ function App() {
           <Route path="job/post" element={<JobPost />} />
           <Route path="jobs" element={<ManageJobs />} />
           <Route path="jobs/:jobId/applicants" element={<Applicants />} />
+          <Route path="jobs/:jobId/edit" element={<EditJob />} />
         </Route>
 
         <Route path="/jobseeker/login" element={<SeekerLogin />} />

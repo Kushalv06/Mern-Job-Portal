@@ -50,6 +50,22 @@ export async function getJobs() {
     }
 }
 
+export async function getJob(jobId) {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/organization/jobs/${jobId}`, {
+            method: 'GET',
+            credentials: 'include'
+        })
+
+        const data = await res.json()
+        return data
+    }
+    catch (err) {
+        console.error(err)
+        toast.error('Server error')
+    }
+}
+
 export async function deleteJob(id) {
     try {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/api/organization/job/${id}`, {
@@ -89,6 +105,24 @@ export async function updateApplication(applicationId, status) {
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
             body: JSON.stringify({ status })
+        })
+
+        const data = await res.json()
+        return data
+    }
+    catch (err) {
+        console.error(err)
+        toast.error('Server error')
+    }
+}
+
+export async function updateJob(jobId, jobDetails) {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/organization/jobs/${jobId}/edit`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(jobDetails)
         })
 
         const data = await res.json()
