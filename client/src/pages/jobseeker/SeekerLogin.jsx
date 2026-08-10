@@ -1,7 +1,7 @@
 import LoginForm from "../../components/LoginForm.jsx"
 import { seekerLogin } from "../../API/auth.js"
 import { getCurrentSeeker } from "../../API/seeker.js"
-import { useNavigate } from "react-router-dom"
+import { useNavigate,Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { startColdStartTimer } from "../../API/delayTimer.js"
@@ -62,15 +62,30 @@ export default function SeekerLogin() {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center h-dvh bg-slate-50 px-4">
-            <p className="mb-6 text-blue-500 text-2xl text-center font-bold">Login as Seeker to Find a Job</p>
+        <div className="h-dvh overflow-hidden bg-slate-50">
+            <div className="mx-auto flex h-full w-[85%] max-w-300 flex-col">
 
-            <LoginForm
-                emailPlaceholder={"jack123@gamil.com"}
-                formHandler={handleSeekerLogin}
-                registerLink={"/jobseeker/register"}
-                isSubmitting={submitting}
-            />
+                <Link
+                    to="/"
+                    className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-blue-600 transition hover:text-blue-700"
+                >
+                    ← Back to Home page
+                </Link>
+
+                <div className="flex flex-1 flex-col items-center justify-center">
+                    <p className="mb-6 text-center text-2xl font-bold text-blue-500">
+                        Login as Seeker to Find a Job
+                    </p>
+
+                    <LoginForm
+                        emailPlaceholder="jack123@gamil.com"
+                        formHandler={handleSeekerLogin}
+                        registerLink="/jobseeker/register"
+                        isSubmitting={submitting}
+                    />
+                </div>
+
+            </div>
         </div>
     )
 }
