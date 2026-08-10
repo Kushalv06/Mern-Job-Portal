@@ -82,7 +82,7 @@ export default function JobForm({
                 </div>
 
                 <button
-                    className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 font-medium text-white transition hover:bg-blue-700 active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-blue-400 w-35"
+                    className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 font-medium text-white transition hover:bg-blue-700 active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-blue-400 whitespace-nowrap shrink-0 w-36"
                     type="submit"
                     disabled={isSubmitting}
                 >

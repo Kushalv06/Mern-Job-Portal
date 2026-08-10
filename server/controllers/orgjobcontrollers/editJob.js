@@ -35,10 +35,8 @@ export async function editJob(req,res){
             });
         }
 
-        console.log(jobType,1)
         const allowedJobTypes = ["remote", "on-site", "hybrid", "internship", "full time", "part time", "contract"]
         const normalizedJobType = jobType.toLowerCase()
-        console.log(jobType,2)
 
         if (!allowedJobTypes.includes(normalizedJobType)) {
             return res.status(400).json({
