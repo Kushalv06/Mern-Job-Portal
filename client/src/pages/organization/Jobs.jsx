@@ -53,6 +53,10 @@ export default function Jobs() {
         navigate(`/organization/jobs/${jobId}/applicants`)
     }
 
+    function handleEdit(jobId){
+        navigate(`/organization/jobs/${jobId}/edit`)
+    }
+
     if (loading) {
         return (
             <main className="min-h-screen bg-slate-50 px-4 py-10">
@@ -115,6 +119,8 @@ export default function Jobs() {
                     autoClose={true}
                     action2={'View Applicants'}
                     onAction2={viewApplications}
+                    action3={'Edit'}
+                    onAction3={handleEdit}
                 />}
             </div>
         </main>

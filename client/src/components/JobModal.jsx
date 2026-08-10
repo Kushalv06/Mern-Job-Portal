@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { formatDistanceToNow } from "date-fns"
 
 
-export default function JobModal({ job, close, action, onAction, actionLoading, afterSuccess, autoClose, action2, onAction2 }) {
+export default function JobModal({ job, close, action, onAction, actionLoading, afterSuccess, autoClose, action2, onAction2, action3, onAction3 }) {
     const [actionStarted, setActionStarted] = useState(false)
 
     useEffect(() => {
@@ -74,16 +74,22 @@ export default function JobModal({ job, close, action, onAction, actionLoading, 
                         <p className="text-sm font-medium text-slate-900">Description</p>
                         <p className="mt-2 whitespace-pre-line text-sm leading-7 text-slate-600">{job.jobDescription}</p>
                     </div>
-                    <div className="w-full flex">
+                    <div className="flex w-full flex-wrap gap-2">
 
-                        <button onClick={() => handler(job._id)} disabled={job.applied || actionStarted} className={`bg-red-500 px-4 py-2 rounded-lg text-white font-medium mt-4 transition duration-75 mr-auto ${job.applied || actionStarted
+                        <button onClick={() => handler(job._id)} disabled={job.applied || actionStarted} className={`bg-red-500 px-4 py-2 rounded-lg text-white font-medium mt-4 transition duration-75 ${job.applied || actionStarted
                             ? "bg-slate-300 text-slate-500 cursor-not-allowed"
                             : "cursor-pointer hover:bg-red-600 active:scale-[0.97]"}`}>{actionStarted ? actionLoading : action}</button>
 
+                        {action3 && <button onClick={()=>onAction3(job._id)} className={`bg-yellow-500 px-4 py-2 mr-auto rounded-lg text-white font-medium mt-4 transition duration-75 
+                        cursor-pointer hover:bg-yellow-600 active:scale-[0.97]`}>
+                            {action3}
+                        </button>}
+
                         {action2 && <button onClick={()=>onAction2(job._id)} className={`bg-green-600 px-4 py-2 ml-auto rounded-lg text-white font-medium mt-4 transition duration-75 
-                        cursor-pointer hover:bg-green-700 active:scale-[0.97]`}>
+                        cursor-pointer hover:bg-green-700 active:scale-[0.97] w-full sm:w-auto`}>
                             {action2}
                         </button>}
+
                     </div>
                 </div>
             </article >
